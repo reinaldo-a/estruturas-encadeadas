@@ -28,7 +28,7 @@ int main() {
     NO *atual = cabeca; // começa no "Centro"
 
     do {
-        printf("\n=== ROTA DO ÔNIBUS ===\n");
+        printf("\n=== ROTA DO ÔNI-BUSS ===\n");
         printf("Ponto atual: %s\n", atual->nome);
         printf("------------------------\n");
         printf("1. Adicionar Ponto\n");
