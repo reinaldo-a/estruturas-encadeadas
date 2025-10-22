@@ -16,7 +16,8 @@ typedef struct filaCarro No;
 void adicionar(No *cabeca);
 void listar(No *cabeca);
 void buscar(No *cabeca, char *nome);
-void atender(No *cabeca, int posicao);
+void removerCliente(No *cabeca, int posicao);
+void atender(No *cabeca);
 
 int main() {
     No cabeca;
@@ -28,9 +29,10 @@ int main() {
         printf("|   SISTEMA MECANICA (FILA)  |\n");
         printf("==============================\n");
         printf("| 1. Adicionar carro         |\n");
-        printf("| 2. Atender carro           |\n");
-        printf("| 3. Buscar carro            |\n");
+        printf("| 2. Remover carro           |\n");
+        printf("| 3. Buscar posição na fila  |\n");
         printf("| 4. Listar fila             |\n");
+        printf("| 5. Atender Cliente         |\n");
         printf("| 0. Sair                    |\n");
         printf("==============================\n");
         printf("Escolha: ");
@@ -42,14 +44,17 @@ int main() {
                 adicionar(&cabeca);
                 break;
             case 2:
-                printf("\n======================== Atender carro ========================\n");
+                system("clear");
+                printf("\n======================== Remover carro ========================\n");
                 int posicao;
-                printf("qual carro será atendido?");
+                listar(&cabeca);
+                printf("Dígite a posição do carro será removido?");
                 scanf("%i", &posicao);
-                atender(&cabeca, posicao);
+                removerCliente(&cabeca, posicao);
                 break;
             case 3: {
-                printf("======================== Buscar carro ========================\n");
+                system("clear");
+                printf("========================  Buscar posição na fila ========================\n");
                 char nome[244];
                 printf("Digite o nome do cliente: ");
                 scanf("%s", nome);
@@ -60,6 +65,11 @@ int main() {
                 system("clear");
                 printf("======================== Listando fila de carros ========================\n");
                 listar(&cabeca);
+                break;
+            case 5:
+                system("clear");
+                printf("======================== Atender Cliente ========================\n");
+                atender(&cabeca);
                 break;
         }
 
@@ -107,10 +117,13 @@ void listar(No *cabeca) {
         return;
     }
 
+    int cont = 1;
+
     while (novo != NULL) {
-        printf("Cliente: %s\nVeículo: %s - %d\n", novo->cliente, novo->veiculo, novo->ano);
+        printf("Posiçõa: %i\nCliente: %s\nVeículo: %s - %d\n",cont, novo->cliente, novo->veiculo, novo->ano);
         printf("==================================\n");
         novo = novo->prox;
+        cont ++;
     }
 }
 
@@ -132,7 +145,7 @@ void buscar(No *cabeca, char *nome) {
 }
 
 //Atender carro e retiralo  da lista
-void atender(No *cabeca, int posicao) {
+void removerCliente(No *cabeca, int posicao) {
     if (cabeca->prox == NULL) {
         printf("Fila vazia!\n");
         return;
@@ -156,6 +169,23 @@ void atender(No *cabeca, int posicao) {
     anterior->prox = atual->prox;
 
     printf("Carro de %s (%s - %d) removido da fila.\n",
+           atual->cliente, atual->veiculo, atual->ano);
+
+    free(atual);
+}
+
+//Atender carro e retiralo  da lista
+void atender(No *cabeca) {
+    if (cabeca->prox == NULL) {
+        printf("Fila vazia!\n");
+        return;
+    }
+
+    No *atual = cabeca->prox;
+
+    cabeca->prox = atual->prox;
+
+    printf("Carro de %s (%s - %d) foi atendido.\n",
            atual->cliente, atual->veiculo, atual->ano);
 
     free(atual);

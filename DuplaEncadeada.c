@@ -24,7 +24,6 @@ int main() {
     NO *atual = NULL;
 
     do {
-        system("clear");
         printf("\n===== HISTORICO DE NAVEGACAO =====\n");
         if(atual != NULL)
             printf("|| --> Pagina Atual %s <-- || \n", atual->aba);
